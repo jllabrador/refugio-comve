@@ -1,0 +1,34 @@
+name = "refugio-comve"
+compatibility_date = "2024-05-12"
+pages_build_output_dir = ".next"
+
+# ── Base de datos principal (SQLite serverless) ──────────────────────────────
+[[d1_databases]]
+binding = "DB"
+database_name = "refugio-db"
+database_id = "REEMPLAZAR_CON_ID_REAL"   # wrangler d1 create refugio-db
+
+# ── Almacenamiento de documentos de identidad ────────────────────────────────
+[[r2_buckets]]
+binding = "DOCS"
+bucket_name = "refugio-docs"
+
+# ── KV para sesiones y caché de verificaciones ───────────────────────────────
+[[kv_namespaces]]
+binding = "KV"
+id = "REEMPLAZAR_CON_ID_REAL"            # wrangler kv namespace create refugio-kv
+
+# ── Cron: vencimiento automático de períodos ─────────────────────────────────
+[triggers]
+crons = ["0 6 * * *"]                    # Diario a las 6:00 AM UTC
+
+# ── Variables de entorno (producción) ────────────────────────────────────────
+[vars]
+NEXT_PUBLIC_APP_URL = "https://refugio.com.ve"
+APP_ENV = "production"
+
+# ── Secrets (configurar con: wrangler secret put NOMBRE) ─────────────────────
+# CLERK_SECRET_KEY
+# WHATSAPP_API_TOKEN
+# WHATSAPP_PHONE_NUMBER_ID
+# RESEND_API_KEY
